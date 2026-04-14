@@ -769,6 +769,63 @@ td:first-child { color: var(--text2); }
 .big-quote em { font-style: normal; color: var(--gold); }
 
 /* ─────────────────────────────────────────
+   FOUNDER CARD
+───────────────────────────────────────── */
+.founder-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  margin: 28px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.founder-card:hover {
+  border-color: rgba(212,160,74,0.3);
+  background: rgba(212,160,74,0.04);
+  text-decoration: none;
+}
+.founder-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(212,160,74,0.1);
+  border: 1px solid rgba(212,160,74,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--disp);
+  font-size: 18px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.founder-info { flex: 1; min-width: 0; }
+.founder-name {
+  font-family: var(--serif);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 2px;
+}
+.founder-role {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.founder-link-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
    CONTINUE BUTTON
 ───────────────────────────────────────── */
 .continue-btn {
@@ -891,6 +948,15 @@ td:first-child { color: var(--text2); }
   <p><strong>Some tools change how fast you work. Some change how you think about work entirely.</strong> OpenCode is the second kind.</p>
   <p>This Buildathon handbook is your entry point into a session where the GrowthX community builds together with an AI coding agent that reads your codebase, writes real code, and ships alongside you.</p>
   <p>You don't need to be a pre-GPT era engineer to get something meaningful out of this. You just need a project idea you care about, a terminal, and the willingness to push past the first wall you hit. By the end of this session, you will have built something, shipped it to your local machine or a repo, and shown it.</p>
+
+  <a class="founder-card" href="https://www.linkedin.com/in/jayair/" target="_blank" rel="noopener noreferrer">
+    <div class="founder-avatar">J</div>
+    <div class="founder-info">
+      <div class="founder-name">Jay Air</div>
+      <div class="founder-role">Founder, OpenCode</div>
+    </div>
+    <div class="founder-link-label">LinkedIn</div>
+  </a>
 
   <h2>What the next 3 hours will ask of you</h2>
   <p><strong>Trust the terminal.</strong> You will run commands without knowing if they're right. That's fine. A wrong command you learn from beats a perfect plan you never execute.</p>
