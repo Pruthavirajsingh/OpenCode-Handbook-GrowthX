@@ -769,59 +769,98 @@ td:first-child { color: var(--text2); }
 .big-quote em { font-style: normal; color: var(--gold); }
 
 /* ─────────────────────────────────────────
-   FOUNDER CARD
+   FOUNDER BLOCK
 ───────────────────────────────────────── */
+.founder-block {
+  margin: 40px 0;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.founder-block-label {
+  padding: 9px 20px;
+  background: var(--bg-code);
+  border-bottom: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+}
+.founder-block-body {
+  padding: 24px 24px 20px;
+  background: var(--bg-card);
+}
+.founder-block-quote {
+  font-family: var(--disp);
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.48;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+.founder-block-context {
+  font-family: var(--serif);
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.72;
+  margin-bottom: 22px;
+}
 .founder-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  margin: 28px 0;
-  background: var(--bg-card);
+  gap: 14px;
+  padding: 13px 16px;
+  background: var(--bg);
   border: 1px solid var(--border2);
-  border-radius: 10px;
+  border-radius: 8px;
   text-decoration: none;
   transition: border-color 0.2s, background 0.2s;
 }
 .founder-card:hover {
   border-color: rgba(212,160,74,0.3);
-  background: rgba(212,160,74,0.04);
+  background: rgba(212,160,74,0.03);
   text-decoration: none;
 }
 .founder-avatar {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(212,160,74,0.1);
-  border: 1px solid rgba(212,160,74,0.2);
+  border: 1px solid rgba(212,160,74,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--disp);
-  font-size: 18px;
+  font-size: 17px;
   color: var(--gold);
   flex-shrink: 0;
 }
 .founder-info { flex: 1; min-width: 0; }
 .founder-name {
   font-family: var(--serif);
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text2);
   margin-bottom: 2px;
 }
-.founder-role {
+.founder-meta {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--muted);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 .founder-link-label {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--dim);
+  color: var(--gold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  border: 1px solid rgba(212,160,74,0.22);
+  background: rgba(212,160,74,0.06);
+  padding: 3px 9px;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
@@ -949,14 +988,22 @@ td:first-child { color: var(--text2); }
   <p>This Buildathon handbook is your entry point into a session where the GrowthX community builds together with an AI coding agent that reads your codebase, writes real code, and ships alongside you.</p>
   <p>You don't need to be a pre-GPT era engineer to get something meaningful out of this. You just need a project idea you care about, a terminal, and the willingness to push past the first wall you hit. By the end of this session, you will have built something, shipped it to your local machine or a repo, and shown it.</p>
 
-  <a class="founder-card" href="https://www.linkedin.com/in/jayair/" target="_blank" rel="noopener noreferrer">
-    <div class="founder-avatar">J</div>
-    <div class="founder-info">
-      <div class="founder-name">Jay Air</div>
-      <div class="founder-role">Founder, OpenCode</div>
+  <div class="founder-block">
+    <div class="founder-block-label">Built by</div>
+    <div class="founder-block-body">
+      <div class="founder-block-quote">"The terminal is where real work happens. OpenCode was built to make that true for AI too."</div>
+      <p class="founder-block-context">OpenCode was created by Jay Air, an independent builder who believed AI coding tools should be open, local-first, and not locked behind a subscription. He built the first version himself, put it on GitHub, and watched it grow to 140,000 stars and 850 contributors. No VC pitch deck. No waitlist. Just a tool that worked, shared publicly, and improved by a community of developers who actually used it every day.</p>
+      <p class="founder-block-context">The tool you are using today exists because one person decided to build in the open instead of behind a paywall. That is the ethos this buildathon runs on.</p>
+      <a class="founder-card" href="https://www.linkedin.com/in/jayair/" target="_blank" rel="noopener noreferrer">
+        <div class="founder-avatar">J</div>
+        <div class="founder-info">
+          <div class="founder-name">Jay Air</div>
+          <div class="founder-meta">Founder, OpenCode &nbsp;·&nbsp; 140k GitHub stars</div>
+        </div>
+        <div class="founder-link-label">LinkedIn</div>
+      </a>
     </div>
-    <div class="founder-link-label">LinkedIn</div>
-  </a>
+  </div>
 
   <h2>What the next 3 hours will ask of you</h2>
   <p><strong>Trust the terminal.</strong> You will run commands without knowing if they're right. That's fine. A wrong command you learn from beats a perfect plan you never execute.</p>
