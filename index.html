@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenCode Buildathon — Handbook</title>
+<title>OpenCode Buildathon , Handbook</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
@@ -880,10 +880,10 @@ td:first-child { color: var(--text2); }
   <h2>What the next 3 hours will ask of you</h2>
   <p><strong>Trust the terminal.</strong> You will run commands without knowing if they're right. That's fine. A wrong command you learn from beats a perfect plan you never execute.</p>
   <p><strong>Be disciplined with time.</strong> You have 3 hours. Not 3 hours "ish." The clock is real, the deadline is hard, and the builders who ship are the ones who respect the clock. When this guide says move on, move on.</p>
-  <p><strong>Stay high agency.</strong> Things will break — missing API keys, LSP errors, agents going off-script. When it happens, ask OpenCode what went wrong (<code>/undo</code>, <code>/plan</code>, then <code>/build</code>). Try to fix it yourself for 15 minutes. If you're still stuck, raise your hand. The only failure is not asking.</p>
+  <p><strong>Stay high agency.</strong> Things will break , missing API keys, LSP errors, agents going off-script. When it happens, ask OpenCode what went wrong (<code>/undo</code>, <code>/plan</code>, then <code>/build</code>). Try to fix it yourself for 15 minutes. If you're still stuck, raise your hand. The only failure is not asking.</p>
 
   <h2>What's in this handbook</h2>
-  <p>This handbook is intentionally written in a way that would make a PM at an MNC or a founder actually use it. Everything you need to go from zero to a working build: how OpenCode works, how to set it up, how to point it at a real project and get it doing useful things. The ideas, the setup guide, the frameworks — all of it is here.</p>
+  <p>This handbook is intentionally written in a way that would make a PM at an MNC or a founder actually use it. Everything you need to go from zero to a working build: how OpenCode works, how to set it up, how to point it at a real project and get it doing useful things. The ideas, the setup guide, the frameworks , all of it is here.</p>
   <p>Read it once to get oriented. Then keep it open while you build.</p>
 
   <h2>What you'll walk away with</h2>
@@ -909,7 +909,7 @@ td:first-child { color: var(--text2); }
     <div class="sec-bar"></div>
   </div>
 
-  <p>Three complete builds. Each scoped for a 3-hour focused session. Pick one — or bring your own idea and use the structure here to scope it. Do not spend more than 15 minutes choosing.</p>
+  <p>Three complete builds. Each scoped for a 3-hour focused session. Pick one , or bring your own idea and use the structure here to scope it. Do not spend more than 15 minutes choosing.</p>
   <div class="callout info"><p>Before reading: note your gut reaction to each. The one you immediately want to explain to someone else is probably your pick.</p></div>
 
   <!-- Idea 0 -->
@@ -926,7 +926,7 @@ td:first-child { color: var(--text2); }
       <p>A terminal-based Pomodoro timer that tracks 25-minute work sessions and 5-minute breaks. Run <code>pomodoro start</code> to begin. See a live countdown. Get a notification when time's up. All sessions saved locally so you can see how many pomodoros you completed today.</p>
 
       <div class="us-wrap">
-        <div class="us-label">User stories — read these before you write your first prompt</div>
+        <div class="us-label">User stories , read these before you write your first prompt</div>
         <div class="us-row"><span class="us-q">"</span>I type <code>pomodoro start</code> and see a live countdown that updates every second."</div>
         <div class="us-row"><span class="us-q">"</span>When 25 minutes end, I see 'Time's up! Take a 5-minute break.' and hear a beep."</div>
         <div class="us-row"><span class="us-q">"</span>I can type <code>pomodoro status</code> anytime to see remaining time and current mode."</div>
@@ -938,7 +938,7 @@ td:first-child { color: var(--text2); }
       <div class="tbl"><table>
         <thead><tr><th>Layer</th><th>Component</th><th>Time</th></tr></thead>
         <tbody>
-          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI — commands: start, status, summary, resume</td><td>15 min</td></tr>
+          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI , commands: start, status, summary, resume</td><td>15 min</td></tr>
           <tr><td><span class="tag tag-logic">Logic</span></td><td>Timer logic with threading + state persistence</td><td>35 min</td></tr>
           <tr><td><span class="tag tag-logic">Logic</span></td><td>Session storage (local JSON) + summary calculation</td><td>20 min</td></tr>
           <tr><td><span class="tag tag-int">Integration</span></td><td>No external services, API keys, or database required</td><td>0 min</td></tr>
@@ -974,9 +974,9 @@ Start with a plan, do not write code yet."</pre></div>
       <p>A CLI tool that analyzes your staged git diff and generates a conventional commit message using AI. Run <code>opencode-commit</code> in any git repository. It reads your changes, understands what you did, and outputs a properly formatted message: <code>feat(auth): add password reset flow</code>. You can accept it, edit it, or reject it.</p>
 
       <div class="us-wrap">
-        <div class="us-label">User stories — read these before you write your first prompt</div>
+        <div class="us-label">User stories , read these before you write your first prompt</div>
         <div class="us-row"><span class="us-q">"</span>I stage my changes with <code>git add</code>, then run <code>opencode-commit</code>. It shows me a suggested commit message based on what I changed."</div>
-        <div class="us-row"><span class="us-q">"</span>The message follows Conventional Commits format: type(scope): subject — with type being feat, fix, docs, style, refactor, test, or chore."</div>
+        <div class="us-row"><span class="us-q">"</span>The message follows Conventional Commits format: type(scope): subject , with type being feat, fix, docs, style, refactor, test, or chore."</div>
         <div class="us-row"><span class="us-q">"</span>If I changed multiple files with different purposes, the tool identifies the primary change and suggests that as the subject."</div>
         <div class="us-row"><span class="us-q">"</span>I can type <code>y</code> to accept the message, <code>e</code> to edit it, or <code>n</code> to cancel and write my own."</div>
         <div class="us-row"><span class="us-q">"</span>If there are no staged changes, it says 'No staged changes. Run git add first.'"</div>
@@ -986,14 +986,14 @@ Start with a plan, do not write code yet."</pre></div>
       <div class="tbl"><table>
         <thead><tr><th>Layer</th><th>Component</th><th>Time</th></tr></thead>
         <tbody>
-          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI — <code>opencode-commit</code> with accept / edit / reject prompt</td><td>20 min</td></tr>
+          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI , <code>opencode-commit</code> with accept / edit / reject prompt</td><td>20 min</td></tr>
           <tr><td><span class="tag tag-logic">Logic</span></td><td>Git diff capture + diff parsing and summarization</td><td>50 min</td></tr>
           <tr><td><span class="tag tag-logic">Logic</span></td><td>LLM prompt engineering for Conventional Commits format</td><td>30 min</td></tr>
           <tr><td><span class="tag tag-int">Integration</span></td><td>OpenCode Zen API (or any LLM provider) + existing Git installation</td><td>10 min</td></tr>
         </tbody>
       </table></div>
 
-      <div class="callout warn"><p><strong>If you're running behind — cut path (60 min):</strong> Skip the edit option. Only accept or cancel. Use a simpler prompt without scope detection — just type: subject.</p></div>
+      <div class="callout warn"><p><strong>If you're running behind , cut path (60 min):</strong> Skip the edit option. Only accept or cancel. Use a simpler prompt without scope detection , just type: subject.</p></div>
 
       <h3>Your first OpenCode prompt</h3>
       <p>Switch to <strong>Plan mode</strong> first (Tab key), then paste:</p>
@@ -1023,7 +1023,7 @@ client. Make a plan first."</pre></div>
       <span class="idea-arrow">›</span>
     </div>
     <div class="idea-body">
-      <p>A CLI tool that ingests your markdown documentation, builds a local vector index, and answers questions about it using a local LLM — with citations showing exactly which file and lines the answer came from. No cloud APIs, no data leaving your machine.</p>
+      <p>A CLI tool that ingests your markdown documentation, builds a local vector index, and answers questions about it using a local LLM , with citations showing exactly which file and lines the answer came from. No cloud APIs, no data leaving your machine.</p>
 
       <div class="us-wrap">
         <div class="us-label">User stories</div>
@@ -1038,7 +1038,7 @@ client. Make a plan first."</pre></div>
         <thead><tr><th>Component</th><th>Choice</th></tr></thead>
         <tbody>
           <tr><td>Chunking strategy</td><td>Split markdown by headings (##, ###). Max 500 tokens, 50-token overlap.</td></tr>
-          <tr><td>Embedding model</td><td><code>Xenova/all-MiniLM-L6-v2</code> — 384 dims, runs locally in Node</td></tr>
+          <tr><td>Embedding model</td><td><code>Xenova/all-MiniLM-L6-v2</code> , 384 dims, runs locally in Node</td></tr>
           <tr><td>Vector storage</td><td>LanceDB (embedded, no server). Schema: id, filepath, chunk_text, embedding, start_line, end_line</td></tr>
           <tr><td>Local LLM</td><td>Ollama with Llama 3.2 or Phi-3</td></tr>
         </tbody>
@@ -1057,7 +1057,7 @@ client. Make a plan first."</pre></div>
 <span class="ck">pip</span> install lancedb</pre></div>
       </div>
 
-      <div class="callout warn"><p><strong>If you're running behind — cut path:</strong> Skip embeddings entirely. Use BM25 keyword search instead. The answers will be less semantically accurate but the core retrieval flow works end-to-end. Pair with Phi-3 mini to stay fast.</p></div>
+      <div class="callout warn"><p><strong>If you're running behind , cut path:</strong> Skip embeddings entirely. Use BM25 keyword search instead. The answers will be less semantically accurate but the core retrieval flow works end-to-end. Pair with Phi-3 mini to stay fast.</p></div>
 
       <h3>Your first OpenCode prompt</h3>
       <div class="cb">
@@ -1099,21 +1099,21 @@ Plan only, no code yet."</pre></div>
     <div class="scope-q">
       <div class="sq-num">Q2</div>
       <div>
-        <div class="sq-title">Interface layer — commands, input, output format</div>
+        <div class="sq-title">Interface layer , commands, input, output format</div>
         <p class="sq-eg">e.g. "Terminal. Commands: start, status, summary. Output: live countdown, daily totals."</p>
       </div>
     </div>
     <div class="scope-q">
       <div class="sq-num">Q3</div>
       <div>
-        <div class="sq-title">Logic layer — what happens between input and output</div>
+        <div class="sq-title">Logic layer , what happens between input and output</div>
         <p class="sq-eg">e.g. "Timer thread → state persistence → JSON storage → summary calculator."</p>
       </div>
     </div>
     <div class="scope-q">
       <div class="sq-num">Q4</div>
       <div>
-        <div class="sq-title">Integration layer — external services, API keys, dependencies</div>
+        <div class="sq-title">Integration layer , external services, API keys, dependencies</div>
         <p class="sq-eg">e.g. "None. Pure Python with standard library only."</p>
       </div>
     </div>
@@ -1127,7 +1127,7 @@ Plan only, no code yet."</pre></div>
     <div class="scope-q">
       <div class="sq-num">Q6</div>
       <div>
-        <div class="sq-title">Cut path — if you're running behind</div>
+        <div class="sq-title">Cut path , if you're running behind</div>
         <p class="sq-eg">What do you drop first? Decide now, before pressure forces a bad call.</p>
       </div>
     </div>
@@ -1150,7 +1150,7 @@ Plan only, no code yet."</pre></div>
 
   <p>This takes about 5 minutes. Do it before anything else. Every minute you spend on setup now is a minute you don't lose in the middle of a build.</p>
 
-  <h2>Step 1 — Install OpenCode</h2>
+  <h2>Step 1 , Install OpenCode</h2>
   <div class="cb">
     <div class="cb-head"><span class="cb-lang">bash</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <div class="cb-body"><pre><span class="cc"># Quickest install (recommended)</span>
@@ -1163,8 +1163,8 @@ Plan only, no code yet."</pre></div>
 <span class="ck">brew</span> install anomalyco/tap/opencode</pre></div>
   </div>
 
-  <h2>Step 2 — Connect an LLM provider</h2>
-  <p>OpenCode works with any provider. Use <strong>OpenCode Zen</strong> for this session — it has a free tier and requires no credit card:</p>
+  <h2>Step 2 , Connect an LLM provider</h2>
+  <p>OpenCode works with any provider. Use <strong>OpenCode Zen</strong> for this session , it has a free tier and requires no credit card:</p>
   <ul class="arrow-list">
     <li>Run <code>opencode</code> in any directory</li>
     <li>Type <code>/connect</code> and press Enter</li>
@@ -1175,7 +1175,7 @@ Plan only, no code yet."</pre></div>
   </ul>
   <p>Alternative providers: OpenAI, Anthropic, Google Gemini, Groq, Together AI, or any local model via Ollama.</p>
 
-  <h2>Step 3 — Initialise your project</h2>
+  <h2>Step 3 , Initialise your project</h2>
   <div class="cb">
     <div class="cb-head"><span class="cb-lang">bash</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <div class="cb-body"><pre><span class="ck">cd</span> <span class="cp">your-project-directory</span>
@@ -1185,7 +1185,7 @@ Plan only, no code yet."</pre></div>
 <span class="cc"># That's it. You're ready to build.</span></pre></div>
   </div>
 
-  <div class="callout info"><p>When you run <code>/init</code>, OpenCode creates an <code>AGENTS.md</code> file in your project root. This file is critical — it tells OpenCode your project's purpose, coding standards, file structure, and constraints. Think of it as the brief you'd give a new developer on day one.</p></div>
+  <div class="callout info"><p>When you run <code>/init</code>, OpenCode creates an <code>AGENTS.md</code> file in your project root. This file is critical , it tells OpenCode your project's purpose, coding standards, file structure, and constraints. Think of it as the brief you'd give a new developer on day one.</p></div>
 
   <h2>Plan mode vs Build mode</h2>
   <div class="mode-grid">
@@ -1208,7 +1208,7 @@ Plan only, no code yet."</pre></div>
       <tr><td><code>opencode</code></td><td>Launch the TUI in the current directory</td><td>Start of every session</td></tr>
       <tr><td><code>/init</code></td><td>Creates AGENTS.md for your project</td><td>First thing in any new project</td></tr>
       <tr><td><code>/connect</code></td><td>Configure LLM provider</td><td>Before the first build</td></tr>
-      <tr><td>Tab key</td><td>Toggle between Build and Plan mode</td><td>Constantly — plan first, then build</td></tr>
+      <tr><td>Tab key</td><td>Toggle between Build and Plan mode</td><td>Constantly , plan first, then build</td></tr>
       <tr><td><code>/undo</code></td><td>Revert the last agent action</td><td>When a change breaks something</td></tr>
       <tr><td><code>/redo</code></td><td>Re-apply a reverted action</td><td>If you changed your mind</td></tr>
       <tr><td><code>/share</code></td><td>Generate a shareable link of your session</td><td>To collaborate or demo</td></tr>
@@ -1238,11 +1238,11 @@ Plan only, no code yet."</pre></div>
 
   <h2>What goes in AGENTS.md</h2>
   <div class="agent-rows">
-    <div class="agent-row"><div class="ar-num">1.</div><div><div class="ar-name">Identity</div><p class="ar-desc">Who the agent is and what it does — one sentence maximum</p></div></div>
+    <div class="agent-row"><div class="ar-num">1.</div><div><div class="ar-name">Identity</div><p class="ar-desc">Who the agent is and what it does , one sentence maximum</p></div></div>
     <div class="agent-row"><div class="ar-num">2.</div><div><div class="ar-name">Context</div><p class="ar-desc">Timezone, currency, project language, and anything project-specific the agent needs to know</p></div></div>
-    <div class="agent-row"><div class="ar-num">3.</div><div><div class="ar-name">Rules</div><p class="ar-desc">Hard constraints the agent must follow — written as commands, not suggestions</p></div></div>
-    <div class="agent-row"><div class="ar-num">4.</div><div><div class="ar-name">Output format</div><p class="ar-desc">The exact structure you want for every response — be specific or it improvises</p></div></div>
-    <div class="agent-row"><div class="ar-num">5.</div><div><div class="ar-name">Boundaries</div><p class="ar-desc">What the agent cannot do or respond to — this is what keeps it on task</p></div></div>
+    <div class="agent-row"><div class="ar-num">3.</div><div><div class="ar-name">Rules</div><p class="ar-desc">Hard constraints the agent must follow , written as commands, not suggestions</p></div></div>
+    <div class="agent-row"><div class="ar-num">4.</div><div><div class="ar-name">Output format</div><p class="ar-desc">The exact structure you want for every response , be specific or it improvises</p></div></div>
+    <div class="agent-row"><div class="ar-num">5.</div><div><div class="ar-name">Boundaries</div><p class="ar-desc">What the agent cannot do or respond to , this is what keeps it on task</p></div></div>
   </div>
 
   <h2>Bad vs good</h2>
@@ -1317,7 +1317,7 @@ Project language: [Python / JavaScript / other]
   </table></div>
 
   <h2>The shortcut</h2>
-  <p>OpenCode already understands your codebase via LSP. You don't need to explain your file structure or functions. AGENTS.md is only for behaviour — how the agent acts, not what the code does.</p>
+  <p>OpenCode already understands your codebase via LSP. You don't need to explain your file structure or functions. AGENTS.md is only for behaviour , how the agent acts, not what the code does.</p>
 
   <button class="continue-btn" onclick="continueSection()">Done. Continue to After the buildathon →</button>
 </template>
@@ -1335,7 +1335,7 @@ Project language: [Python / JavaScript / other]
   <div class="after-grid">
     <div class="after-card">
       <div class="after-title">Push to GitHub</div>
-      <p class="after-desc">Ship it publicly. Add the feature you cut during the build. You know exactly what you dropped — go add it back.</p>
+      <p class="after-desc">Ship it publicly. Add the feature you cut during the build. You know exactly what you dropped , go add it back.</p>
     </div>
     <div class="after-card">
       <div class="after-title">Share your session</div>
@@ -1343,7 +1343,7 @@ Project language: [Python / JavaScript / other]
     </div>
     <div class="after-card">
       <div class="after-title">Refine AGENTS.md</div>
-      <p class="after-desc">Better instructions compound over time. Spend 30 minutes this week improving it — you'll see dramatically better outputs.</p>
+      <p class="after-desc">Better instructions compound over time. Spend 30 minutes this week improving it , you'll see dramatically better outputs.</p>
     </div>
     <div class="after-card">
       <div class="after-title">Try a local model</div>
@@ -1353,10 +1353,10 @@ Project language: [Python / JavaScript / other]
 
   <h2>Go deeper</h2>
   <ul class="arrow-list">
-    <li><strong>OpenCode Docs</strong> — Full reference, API docs, and configuration guide at opencode.ai</li>
-    <li><strong>GitHub repo</strong> — 140k+ stars, 850+ contributors, open to pull requests</li>
-    <li><strong>Awesome OpenCode</strong> — Community-curated use cases, patterns, and builds</li>
-    <li><strong>OpenCode Discord</strong> — Get help, share builds, find collaborators working on similar things</li>
+    <li><strong>OpenCode Docs</strong> , Full reference, API docs, and configuration guide at opencode.ai</li>
+    <li><strong>GitHub repo</strong> , 140k+ stars, 850+ contributors, open to pull requests</li>
+    <li><strong>Awesome OpenCode</strong> , Community-curated use cases, patterns, and builds</li>
+    <li><strong>OpenCode Discord</strong> , Get help, share builds, find collaborators working on similar things</li>
   </ul>
 
   <div class="callout tip"><p>Post on LinkedIn or X: <em>"I built [tool name] in 3 hours using @opencode, an open-source AI agent."</em> Tag @opencode and @growthx. They reshare every build they see.</p></div>
@@ -1375,7 +1375,7 @@ Project language: [Python / JavaScript / other]
   <p class="big-quote">You walked in, maybe never having used an AI coding agent in the terminal, and you built something <em>real.</em></p>
   <p class="big-quote">You scoped it, prompted it, debugged it, and shipped it.</p>
 
-  <p>Today was the starting point. The art of agentic coding is now something you know. And it compounds — every codebase you touch from here, you'll look at it differently. You'll think: <em>"I could ask OpenCode to build that."</em></p>
+  <p>Today was the starting point. The art of agentic coding is now something you know. And it compounds , every codebase you touch from here, you'll look at it differently. You'll think: <em>"I could ask OpenCode to build that."</em></p>
   <p>The only thing left to do is tell someone.</p>
 
   <h2>Post template</h2>
@@ -1386,7 +1386,7 @@ Project language: [Python / JavaScript / other]
 
 Not a tutorial. An actual working thing.
 
-Used @opencode — an open-source AI coding agent that runs
+Used @opencode , an open-source AI coding agent that runs
 in the terminal, reads your codebase, and writes real code
 alongside you. Free to use.
 
@@ -1401,8 +1401,8 @@ Build: [link or screenshot]
   <h2>What comes next</h2>
   <ul class="arrow-list">
     <li>Push the repo and add a README that explains what it does and how to run it</li>
-    <li>Add back the feature you cut — you already know where it goes</li>
-    <li>Show one other builder how you used OpenCode — teaching cements the skill</li>
+    <li>Add back the feature you cut , you already know where it goes</li>
+    <li>Show one other builder how you used OpenCode , teaching cements the skill</li>
     <li>Pick your next project and scope it the same way: three layers, one cut path</li>
   </ul>
 
@@ -1468,7 +1468,7 @@ function renderNav() {
     ].filter(Boolean).join(' ');
     const icon = isUnlocked
       ? `<span class="nav-btn-icon">${s.num}</span>`
-      : `<span class="nav-btn-icon" style="font-size:10px;opacity:0.4">—</span>`;
+      : `<span class="nav-btn-icon" style="font-size:10px;opacity:0.4">,</span>`;
     const badge = s.badge
       ? `<span class="nav-btn-badge">${s.badge}</span>`
       : '';
