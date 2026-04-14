@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenCode Buildathon — Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --bg:       #070707;
+  --bg-nav:   #090909;
+  --bg-code:  #0c0c0c;
+  --bg-card:  #0e0e0e;
+  --gold:     #d4a04a;
+  --teal:     #4ad4a0;
+  --red:      #e85d3a;
+  --text:     #f0e8d8;
+  --text2:    #e8dcc8;
+  --body:     #b0a898;
+  --muted:    #777777;
+  --dim:      #555555;
+  --border:   #141414;
+  --border2:  #1e1e1e;
+  --nav-w:    280px;
+  --mono:     'JetBrains Mono', monospace;
+  --serif:    'Source Serif 4', Georgia, serif;
+  --disp:     'Instrument Serif', Georgia, serif;
+}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────
+   TOP PROGRESS BAR
+───────────────────────────────────────── */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--border2);
+  z-index: 300;
+}
+.top-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #e8c06a);
+  width: 0%;
+  transition: width 0.45s ease;
+}
+
+/* ─────────────────────────────────────────
+   SHELL
+───────────────────────────────────────── */
+.shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 2px;
+}
+
+/* ─────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────── */
+nav {
+  width: var(--nav-w);
+  min-width: var(--nav-w);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-nav);
+  border-right: 1px solid var(--border);
+  height: 100%;
+  overflow: hidden;
+  z-index: 150;
+  transition: left 0.25s ease;
+}
+
+/* nav header */
+.nav-hd {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.nav-hd-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.nav-hd-title {
+  font-family: var(--disp);
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.nav-hd-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+}
+
+/* nav items */
+.nav-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+}
+.nav-items::-webkit-scrollbar { width: 3px; }
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 2px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--muted);
+}
+.nav-btn:hover:not(.locked) {
+  background: rgba(212,160,74,0.04);
+  color: var(--text2);
+}
+.nav-btn.active {
+  background: rgba(212,160,74,0.06);
+  border-left-color: var(--gold);
+  color: var(--text2);
+}
+.nav-btn.locked {
+  opacity: 0.28;
+  cursor: default;
+  pointer-events: none;
+}
+.nav-btn-icon {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  min-width: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.nav-btn.locked .nav-btn-icon { color: var(--muted); }
+.nav-btn-text {
+  font-family: var(--serif);
+  font-size: 14px;
+  flex: 1;
+  line-height: 1.3;
+}
+.nav-btn-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--teal);
+  border: 1px solid rgba(74,212,160,0.25);
+  background: rgba(74,212,160,0.07);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* nav footer */
+.nav-ft {
+  padding: 16px 24px 24px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.nav-progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.npb {
+  flex: 1;
+  height: 2px;
+  background: var(--border2);
+  border-radius: 1px;
+  transition: background 0.35s;
+}
+.npb.done   { background: var(--gold); }
+.npb.active { background: rgba(212,160,74,0.38); }
+.nav-credit {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+}
+
+/* ─────────────────────────────────────────
+   MAIN
+───────────────────────────────────────── */
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 52px 72px 120px;
+}
+
+/* ─────────────────────────────────────────
+   CONTENT
+───────────────────────────────────────── */
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  animation: fadeUp 0.35s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────
+   SECTION HEADER
+───────────────────────────────────────── */
+.sec-hd { margin-bottom: 52px; }
+.sec-num {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.sec-hd h1 {
+  font-family: var(--disp);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  margin-bottom: 20px;
+}
+.sec-bar {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+}
+.sec-bar.teal { background: var(--teal); }
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY
+───────────────────────────────────────── */
+h2 {
+  font-family: var(--disp);
+  font-size: 27px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 56px 0 16px;
+  line-height: 1.2;
+}
+.sec-hd + h2,
+.sec-hd ~ h2:first-of-type { margin-top: 0; }
+
+h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 36px 0 14px;
+}
+
+p {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  color: var(--body);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+p:last-child { margin-bottom: 0; }
+
+strong { font-weight: 600; color: var(--text2); }
+em     { font-style: italic; color: var(--text2); }
+
+code {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--gold);
+  background: rgba(212,160,74,0.08);
+  border: 1px solid rgba(212,160,74,0.16);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────
+   CALLOUTS
+───────────────────────────────────────── */
+.callout {
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+}
+.callout p { font-size: 15px; line-height: 1.72; margin: 0; }
+.callout.info { border-color: var(--gold); background: rgba(212,160,74,0.07); }
+.callout.tip  { border-color: var(--teal); background: rgba(74,212,160,0.06); }
+.callout.warn { border-color: var(--red);  background: rgba(232,93,58,0.06);  }
+
+/* ─────────────────────────────────────────
+   CODE BLOCKS
+───────────────────────────────────────── */
+.cb {
+  margin: 20px 0;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: var(--mono);
+}
+.cb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #111;
+  border-bottom: 1px solid var(--border2);
+}
+.cb-lang {
+  font-size: 11px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.cb-copy {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #888;
+  background: none;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.cb-copy:hover { color: var(--text2); border-color: #555; }
+.cb-copy.ok    { color: var(--gold);  border-color: rgba(212,160,74,0.4); }
+.cb-body {
+  background: var(--bg-code);
+  padding: 16px 20px;
+  overflow-x: auto;
+}
+pre {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.78;
+  color: #c8b89a;
+  white-space: pre;
+}
+.cc { color: #4a4840; }
+.ck { color: var(--gold); }
+.cs { color: #c8905a; }
+.cp { color: #7ab4d4; }
+
+/* ─────────────────────────────────────────
+   LISTS
+───────────────────────────────────────── */
+.arrow-list {
+  list-style: none;
+  margin: 16px 0 20px;
+  display: grid;
+  gap: 8px;
+}
+.arrow-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--body);
+  line-height: 1.65;
+}
+.arrow-list li::before {
+  content: '→';
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 12px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   TABLES
+───────────────────────────────────────── */
+.tbl { overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid var(--border2); }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  padding: 11px 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--gold);
+  background: var(--bg-code);
+  border-bottom: 2px solid var(--gold);
+}
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #161616;
+  color: #999;
+  font-size: 13.5px;
+  vertical-align: top;
+  line-height: 1.58;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(odd) td  { background: #0a0a0a; }
+tr:nth-child(even) td { background: #0e0e0e; }
+td:first-child { color: var(--text2); }
+
+/* ─────────────────────────────────────────
+   LAYER TAGS
+───────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.tag-ui    { background: rgba(96,165,250,0.1);  color: #60a5fa; }
+.tag-logic { background: rgba(212,160,74,0.1);  color: var(--gold); }
+.tag-int   { background: rgba(167,139,250,0.1); color: #a78bfa; }
+
+/* ─────────────────────────────────────────
+   DIFFICULTY BADGES
+───────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 9px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.easy   { color: var(--teal); border: 1px solid rgba(74,212,160,0.25);  background: rgba(74,212,160,0.07);  }
+.medium { color: var(--gold); border: 1px solid rgba(212,160,74,0.25);  background: rgba(212,160,74,0.07);  }
+.hard   { color: var(--red);  border: 1px solid rgba(232,93,58,0.25);   background: rgba(232,93,58,0.07);   }
+
+/* ─────────────────────────────────────────
+   IDEA CARDS
+───────────────────────────────────────── */
+.idea-card {
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.idea-card:hover     { border-color: #282828; }
+.idea-card.open      { border-color: rgba(212,160,74,0.22); }
+
+.idea-hd {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  background: var(--bg-card);
+  user-select: none;
+  transition: background 0.15s;
+}
+.idea-hd:hover { background: #111; }
+
+.idea-meta { flex: 1; min-width: 0; }
+.idea-title {
+  font-family: var(--disp);
+  font-size: 19px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.idea-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+}
+.idea-arrow {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--dim);
+  transition: transform 0.22s, color 0.22s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.idea-card.open .idea-arrow { transform: rotate(90deg); color: var(--gold); }
+
+.idea-body {
+  display: none;
+  padding: 0 20px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.idea-card.open .idea-body { display: block; }
+.idea-body > p:first-child { margin-top: 20px; }
+.idea-body h3 { margin-top: 28px; }
+
+/* ─────────────────────────────────────────
+   USER STORIES
+───────────────────────────────────────── */
+.us-wrap {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+.us-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+.us-row {
+  display: flex;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.62;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.us-row:last-child { border-bottom: none; padding-bottom: 0; }
+.us-q {
+  color: #4a7a9a;
+  font-family: var(--mono);
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─────────────────────────────────────────
+   SCOPE QUESTIONS
+───────────────────────────────────────── */
+.scope-grid { display: grid; gap: 12px; margin: 24px 0; }
+.scope-q {
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.sq-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold);
+  background: rgba(212,160,74,0.08);
+  border: 1px solid rgba(212,160,74,0.2);
+  border-radius: 6px;
+  padding: 6px 0;
+  text-align: center;
+  line-height: 1;
+}
+.sq-title { font-weight: 600; color: var(--text2); font-size: 14px; margin-bottom: 4px; }
+.sq-eg    { font-family: var(--serif); font-size: 13px; color: var(--muted); font-style: italic; margin: 0; }
+
+/* ─────────────────────────────────────────
+   MODE CARDS
+───────────────────────────────────────── */
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.mode-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 18px;
+}
+.mode-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.mode-tag.blue   { background: rgba(96,165,250,0.1);  color: #60a5fa; }
+.mode-tag.purple { background: rgba(167,139,250,0.1); color: #a78bfa; }
+.mode-name { font-weight: 600; color: var(--text2); font-size: 15px; margin-bottom: 8px; }
+.mode-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+/* ─────────────────────────────────────────
+   AGENTS.MD ROWS
+───────────────────────────────────────── */
+.agent-rows { display: grid; gap: 8px; margin: 20px 0; }
+.agent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+}
+.ar-num  { font-family: var(--mono); font-size: 16px; color: var(--dim); min-width: 20px; line-height: 1.4; }
+.ar-name { font-weight: 600; color: var(--text2); font-size: 14px; margin-bottom: 3px; }
+.ar-desc { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+/* ─────────────────────────────────────────
+   BAD / GOOD COMPARE
+───────────────────────────────────────── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.cmp-card { border-radius: 8px; padding: 16px 18px; border: 1px solid; }
+.cmp-bad  { border-color: rgba(232,93,58,0.22);  background: rgba(232,93,58,0.04);  }
+.cmp-good { border-color: rgba(212,160,74,0.22); background: rgba(212,160,74,0.04); }
+.cmp-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+.cmp-bad  .cmp-label { color: var(--red);  }
+.cmp-good .cmp-label { color: var(--gold); }
+.cmp-card p { font-family: var(--mono); font-size: 12.5px; line-height: 1.65; color: var(--muted); margin: 0; }
+.cmp-card p + p { margin-top: 10px; font-family: var(--serif); font-size: 13px; color: var(--dim); }
+
+/* ─────────────────────────────────────────
+   REFINEMENT LOOP
+───────────────────────────────────────── */
+.loop {
+  display: flex;
+  gap: 0;
+  margin: 28px 0;
+  position: relative;
+}
+.loop::before {
+  content: '';
+  position: absolute;
+  top: 18px; left: 18px; right: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212,160,74,0.2), var(--border2), rgba(212,160,74,0.2));
+}
+.loop-step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.loop-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px;
+  font-family: var(--mono); font-size: 12px; color: var(--gold);
+  transition: border-color 0.2s, background 0.2s;
+}
+.loop-step:hover .loop-dot { border-color: rgba(212,160,74,0.5); background: rgba(212,160,74,0.06); }
+.loop-lbl { font-family: var(--mono); font-size: 10.5px; color: var(--muted); line-height: 1.45; padding: 0 4px; }
+
+/* ─────────────────────────────────────────
+   STATS ROW
+───────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 28px 0;
+}
+.stat-item {
+  background: var(--bg-card);
+  padding: 20px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--disp);
+  font-size: 30px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.stat-lbl { font-family: var(--mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+
+/* ─────────────────────────────────────────
+   AFTER CARDS
+───────────────────────────────────────── */
+.after-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.after-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.after-card:hover { border-color: rgba(212,160,74,0.2); }
+.after-icon  { display: none; }
+.after-title { font-weight: 600; color: var(--text2); font-size: 14px; margin-bottom: 6px; }
+.after-desc  { font-size: 13px; color: var(--muted); line-height: 1.62; margin: 0; }
+
+/* ─────────────────────────────────────────
+   CLOSING
+───────────────────────────────────────── */
+.big-quote {
+  font-family: var(--disp);
+  font-size: clamp(22px, 3vw, 32px);
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 580px;
+  margin-bottom: 18px;
+}
+.big-quote em { font-style: normal; color: var(--gold); }
+
+/* ─────────────────────────────────────────
+   CONTINUE BUTTON
+───────────────────────────────────────── */
+.continue-btn {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  margin-top: 56px;
+  background: rgba(212,160,74,0.07);
+  border: 1px solid rgba(212,160,74,0.27);
+  border-radius: 10px;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.continue-btn:hover {
+  background: rgba(212,160,74,0.13);
+  border-color: rgba(212,160,74,0.48);
+}
+.continue-btn.teal-btn {
+  border-color: rgba(74,212,160,0.27);
+  background: rgba(74,212,160,0.07);
+  color: var(--teal);
+}
+.continue-btn.teal-btn:hover {
+  background: rgba(74,212,160,0.13);
+  border-color: rgba(74,212,160,0.48);
+}
+
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 10px; left: 10px;
+  z-index: 201;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  color: var(--gold);
+  padding: 8px 13px;
+  font-family: var(--mono);
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 140;
+}
+.nav-overlay.open { display: block; }
+
+@media (max-width: 860px) {
+  .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+  nav {
+    position: fixed;
+    left: calc(-1 * var(--nav-w));
+    top: 0; bottom: 0;
+  }
+  nav.open { left: 0; }
+  main { padding: 40px 24px 100px; }
+  .mode-grid, .compare-grid, .after-grid { grid-template-columns: 1fr; }
+  .loop { flex-direction: column; gap: 8px; }
+  .loop::before { display: none; }
+  .loop-step { display: flex; align-items: center; gap: 12px; text-align: left; }
+  .loop-dot  { flex-shrink: 0; margin: 0; }
+  .stats-row { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="top-bar"><div class="top-fill" id="topFill"></div></div>
+<button class="mobile-toggle" id="mobileToggle">menu</button>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<div class="shell">
+
+  <!-- ═══ SIDEBAR ═══════════════════════════════ -->
+  <nav id="sidebar">
+    <div class="nav-hd">
+      <div class="nav-hd-label">GrowthX</div>
+      <div class="nav-hd-title">OpenCode<br>Buildathon</div>
+      <div class="nav-hd-sub">The handbook</div>
+    </div>
+    <div class="nav-items" id="navItems"></div>
+    <div class="nav-ft">
+      <div class="nav-progress" id="navProgress"></div>
+      <div class="nav-credit">Built by GrowthX<br>Powered by OpenCode</div>
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN ══════════════════════════════════ -->
+  <main id="mainArea">
+    <div class="content" id="content"></div>
+  </main>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION TEMPLATES
+════════════════════════════════════════════════ -->
+
+<!-- ── 00: Welcome ─────────────────────────── -->
+<template id="tpl-0">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <h1>Welcome</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p><strong>Some tools change how fast you work. Some change how you think about work entirely.</strong> OpenCode is the second kind.</p>
+  <p>This Buildathon handbook is your entry point into a session where the GrowthX community builds together with an AI coding agent that reads your codebase, writes real code, and ships alongside you.</p>
+  <p>You don't need to be a pre-GPT era engineer to get something meaningful out of this. You just need a project idea you care about, a terminal, and the willingness to push past the first wall you hit. By the end of this session, you will have built something, shipped it to your local machine or a repo, and shown it.</p>
+
+  <h2>What the next 3 hours will ask of you</h2>
+  <p><strong>Trust the terminal.</strong> You will run commands without knowing if they're right. That's fine. A wrong command you learn from beats a perfect plan you never execute.</p>
+  <p><strong>Be disciplined with time.</strong> You have 3 hours. Not 3 hours "ish." The clock is real, the deadline is hard, and the builders who ship are the ones who respect the clock. When this guide says move on, move on.</p>
+  <p><strong>Stay high agency.</strong> Things will break — missing API keys, LSP errors, agents going off-script. When it happens, ask OpenCode what went wrong (<code>/undo</code>, <code>/plan</code>, then <code>/build</code>). Try to fix it yourself for 15 minutes. If you're still stuck, raise your hand. The only failure is not asking.</p>
+
+  <h2>What's in this handbook</h2>
+  <p>This handbook is intentionally written in a way that would make a PM at an MNC or a founder actually use it. Everything you need to go from zero to a working build: how OpenCode works, how to set it up, how to point it at a real project and get it doing useful things. The ideas, the setup guide, the frameworks — all of it is here.</p>
+  <p>Read it once to get oriented. Then keep it open while you build.</p>
+
+  <h2>What you'll walk away with</h2>
+  <p>By the end of this buildathon, you will be able to:</p>
+  <ul class="arrow-list">
+    <li>Set up and operate OpenCode locally</li>
+    <li>Understand and use Plan vs Build modes effectively</li>
+    <li>Treat OpenCode as a junior developer, not a chatbot</li>
+    <li>Ship at least one real feature or product using agent workflows</li>
+    <li>Write high-quality prompts that produce reliable outputs</li>
+    <li>Debug, iterate, and refine agent-generated code</li>
+    <li>Think in agent loops instead of code snippets</li>
+  </ul>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to Idea library →</button>
+</template>
+
+<!-- ── 01: Idea Library ─────────────────────── -->
+<template id="tpl-1">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <h1>Idea library</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p>Three complete builds. Each scoped for a 3-hour focused session. Pick one — or bring your own idea and use the structure here to scope it. Do not spend more than 15 minutes choosing.</p>
+  <div class="callout info"><p>Before reading: note your gut reaction to each. The one you immediately want to explain to someone else is probably your pick.</p></div>
+
+  <!-- Idea 0 -->
+  <div class="idea-card" id="idea-0">
+    <div class="idea-hd" onclick="toggleIdea(0)">
+      <span class="badge easy">Easy</span>
+      <div class="idea-meta">
+        <div class="idea-title">CLI Pomodoro Tracker</div>
+        <div class="idea-time">1 – 1.5 hours</div>
+      </div>
+      <span class="idea-arrow">›</span>
+    </div>
+    <div class="idea-body">
+      <p>A terminal-based Pomodoro timer that tracks 25-minute work sessions and 5-minute breaks. Run <code>pomodoro start</code> to begin. See a live countdown. Get a notification when time's up. All sessions saved locally so you can see how many pomodoros you completed today.</p>
+
+      <div class="us-wrap">
+        <div class="us-label">User stories — read these before you write your first prompt</div>
+        <div class="us-row"><span class="us-q">"</span>I type <code>pomodoro start</code> and see a live countdown that updates every second."</div>
+        <div class="us-row"><span class="us-q">"</span>When 25 minutes end, I see 'Time's up! Take a 5-minute break.' and hear a beep."</div>
+        <div class="us-row"><span class="us-q">"</span>I can type <code>pomodoro status</code> anytime to see remaining time and current mode."</div>
+        <div class="us-row"><span class="us-q">"</span>At end of day, <code>pomodoro summary</code> shows: 'Today: 6 pomodoros. Total: 2.5 hours.'"</div>
+        <div class="us-row"><span class="us-q">"</span>If I close the terminal, <code>pomodoro resume</code> picks up where I left off."</div>
+      </div>
+
+      <h3>Three-layer breakdown</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Layer</th><th>Component</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI — commands: start, status, summary, resume</td><td>15 min</td></tr>
+          <tr><td><span class="tag tag-logic">Logic</span></td><td>Timer logic with threading + state persistence</td><td>35 min</td></tr>
+          <tr><td><span class="tag tag-logic">Logic</span></td><td>Session storage (local JSON) + summary calculation</td><td>20 min</td></tr>
+          <tr><td><span class="tag tag-int">Integration</span></td><td>No external services, API keys, or database required</td><td>0 min</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Your first OpenCode prompt</h3>
+      <p>Switch to <strong>Plan mode</strong> first (Tab key), then paste:</p>
+      <div class="cb">
+        <div class="cb-head"><span class="cb-lang">prompt</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+        <div class="cb-body"><pre>"I need a Python CLI pomodoro tracker. Commands: start, status,
+pause, resume, summary. Use threading for the countdown so the
+timer updates while waiting for input. Store session data in
+~/.pomodoro/sessions.json. Each session should log: start time,
+end time, duration, mode (work/break). The summary command
+calculates today's total pomodoros and total focus minutes.
+Start with a plan, do not write code yet."</pre></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Idea 1 -->
+  <div class="idea-card" id="idea-1">
+    <div class="idea-hd" onclick="toggleIdea(1)">
+      <span class="badge medium">Medium</span>
+      <div class="idea-meta">
+        <div class="idea-title">Git Commit Message Generator</div>
+        <div class="idea-time">2 – 2.5 hours</div>
+      </div>
+      <span class="idea-arrow">›</span>
+    </div>
+    <div class="idea-body">
+      <p>A CLI tool that analyzes your staged git diff and generates a conventional commit message using AI. Run <code>opencode-commit</code> in any git repository. It reads your changes, understands what you did, and outputs a properly formatted message: <code>feat(auth): add password reset flow</code>. You can accept it, edit it, or reject it.</p>
+
+      <div class="us-wrap">
+        <div class="us-label">User stories — read these before you write your first prompt</div>
+        <div class="us-row"><span class="us-q">"</span>I stage my changes with <code>git add</code>, then run <code>opencode-commit</code>. It shows me a suggested commit message based on what I changed."</div>
+        <div class="us-row"><span class="us-q">"</span>The message follows Conventional Commits format: type(scope): subject — with type being feat, fix, docs, style, refactor, test, or chore."</div>
+        <div class="us-row"><span class="us-q">"</span>If I changed multiple files with different purposes, the tool identifies the primary change and suggests that as the subject."</div>
+        <div class="us-row"><span class="us-q">"</span>I can type <code>y</code> to accept the message, <code>e</code> to edit it, or <code>n</code> to cancel and write my own."</div>
+        <div class="us-row"><span class="us-q">"</span>If there are no staged changes, it says 'No staged changes. Run git add first.'"</div>
+      </div>
+
+      <h3>Three-layer breakdown</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Layer</th><th>Component</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-ui">Interface</span></td><td>Terminal CLI — <code>opencode-commit</code> with accept / edit / reject prompt</td><td>20 min</td></tr>
+          <tr><td><span class="tag tag-logic">Logic</span></td><td>Git diff capture + diff parsing and summarization</td><td>50 min</td></tr>
+          <tr><td><span class="tag tag-logic">Logic</span></td><td>LLM prompt engineering for Conventional Commits format</td><td>30 min</td></tr>
+          <tr><td><span class="tag tag-int">Integration</span></td><td>OpenCode Zen API (or any LLM provider) + existing Git installation</td><td>10 min</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout warn"><p><strong>If you're running behind — cut path (60 min):</strong> Skip the edit option. Only accept or cancel. Use a simpler prompt without scope detection — just type: subject.</p></div>
+
+      <h3>Your first OpenCode prompt</h3>
+      <p>Switch to <strong>Plan mode</strong> first (Tab key), then paste:</p>
+      <div class="cb">
+        <div class="cb-head"><span class="cb-lang">prompt</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+        <div class="cb-body"><pre>"I need a CLI tool called 'opencode-commit' that generates git
+commit messages using AI. It should: 1) Run git diff --cached
+to get staged changes. 2) If no staged changes, print 'No
+staged changes. Run git add first.' 3) Send the diff to an LLM
+with a prompt asking for Conventional Commits format. 4) Display
+the suggestion and ask: 'Accept (y), edit (e), cancel (n)?'
+5) If y, run git commit -m 'suggestion'. If e, open $EDITOR
+with the suggestion. If n, exit. Use OpenCode's built-in LLM
+client. Make a plan first."</pre></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Idea 2 -->
+  <div class="idea-card" id="idea-2">
+    <div class="idea-hd" onclick="toggleIdea(2)">
+      <span class="badge hard">Advanced</span>
+      <div class="idea-meta">
+        <div class="idea-title">Local RAG on Markdown Docs</div>
+        <div class="idea-time">2 – 3 hours</div>
+      </div>
+      <span class="idea-arrow">›</span>
+    </div>
+    <div class="idea-body">
+      <p>A CLI tool that ingests your markdown documentation, builds a local vector index, and answers questions about it using a local LLM — with citations showing exactly which file and lines the answer came from. No cloud APIs, no data leaving your machine.</p>
+
+      <div class="us-wrap">
+        <div class="us-label">User stories</div>
+        <div class="us-row"><span class="us-q">"</span>I run <code>docs ingest ./docs</code> and all markdown files get embedded into a local vector store."</div>
+        <div class="us-row"><span class="us-q">"</span>I run <code>docs query "how do I authenticate"</code> and get a 2–3 sentence answer with citations."</div>
+        <div class="us-row"><span class="us-q">"</span>Citations show filename and exact line numbers: <code>api.md (lines 45–52)</code>."</div>
+        <div class="us-row"><span class="us-q">"</span>If the answer isn't in the docs, it says "I couldn't find this in the documentation."</div>
+      </div>
+
+      <h3>Technical components</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Component</th><th>Choice</th></tr></thead>
+        <tbody>
+          <tr><td>Chunking strategy</td><td>Split markdown by headings (##, ###). Max 500 tokens, 50-token overlap.</td></tr>
+          <tr><td>Embedding model</td><td><code>Xenova/all-MiniLM-L6-v2</code> — 384 dims, runs locally in Node</td></tr>
+          <tr><td>Vector storage</td><td>LanceDB (embedded, no server). Schema: id, filepath, chunk_text, embedding, start_line, end_line</td></tr>
+          <tr><td>Local LLM</td><td>Ollama with Llama 3.2 or Phi-3</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Setup before starting</h3>
+      <div class="cb">
+        <div class="cb-head"><span class="cb-lang">bash</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+        <div class="cb-body"><pre><span class="cc"># 1. Install Ollama</span>
+<span class="ck">curl</span> -fsSL https://ollama.com/install.sh | sh
+<span class="ck">ollama</span> pull llama3.2:3b
+
+<span class="cc"># 2. Install LanceDB</span>
+<span class="ck">npm</span> install vectordb
+<span class="cc"># or</span>
+<span class="ck">pip</span> install lancedb</pre></div>
+      </div>
+
+      <div class="callout warn"><p><strong>If you're running behind — cut path:</strong> Skip embeddings entirely. Use BM25 keyword search instead. The answers will be less semantically accurate but the core retrieval flow works end-to-end. Pair with Phi-3 mini to stay fast.</p></div>
+
+      <h3>Your first OpenCode prompt</h3>
+      <div class="cb">
+        <div class="cb-head"><span class="cb-lang">prompt</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+        <div class="cb-body"><pre>"I need a CLI tool called 'docs' with two commands: ingest and
+query. 'docs ingest [path]' reads all .md files recursively,
+splits them by headings, embeds each chunk using
+Xenova/all-MiniLM-L6-v2, and stores in LanceDB at ~/.docs-rag/.
+'docs query [question]' embeds the question, finds the top 5
+closest chunks, and passes them to Ollama llama3.2:3b to
+generate a 2-3 sentence answer with file citations.
+Plan only, no code yet."</pre></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to Scope your build →</button>
+</template>
+
+<!-- ── 02: Scope Your Build ─────────────────── -->
+<template id="tpl-2">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <h1>Scope your build</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p>The single biggest cause of wasted time in a build session: starting to prompt before you know exactly what you're building. Answer these six questions. It takes 10 minutes. It saves 60.</p>
+  <div class="callout info"><p><strong>Plan before you prompt. Every time.</strong> A vague request produces something impressive but wrong. You spend 30 minutes correcting it. By then you could have built the right thing twice. Fill this in before you write a single prompt.</p></div>
+
+  <div class="scope-grid">
+    <div class="scope-q">
+      <div class="sq-num">Q1</div>
+      <div>
+        <div class="sq-title">What are you building? (one sentence)</div>
+        <p class="sq-eg">e.g. "A CLI pomodoro timer that tracks work sessions and shows daily summaries."</p>
+      </div>
+    </div>
+    <div class="scope-q">
+      <div class="sq-num">Q2</div>
+      <div>
+        <div class="sq-title">Interface layer — commands, input, output format</div>
+        <p class="sq-eg">e.g. "Terminal. Commands: start, status, summary. Output: live countdown, daily totals."</p>
+      </div>
+    </div>
+    <div class="scope-q">
+      <div class="sq-num">Q3</div>
+      <div>
+        <div class="sq-title">Logic layer — what happens between input and output</div>
+        <p class="sq-eg">e.g. "Timer thread → state persistence → JSON storage → summary calculator."</p>
+      </div>
+    </div>
+    <div class="scope-q">
+      <div class="sq-num">Q4</div>
+      <div>
+        <div class="sq-title">Integration layer — external services, API keys, dependencies</div>
+        <p class="sq-eg">e.g. "None. Pure Python with standard library only."</p>
+      </div>
+    </div>
+    <div class="scope-q">
+      <div class="sq-num">Q5</div>
+      <div>
+        <div class="sq-title">Tool type</div>
+        <p class="sq-eg">CLI Tool / Web App / Script / Automation / Other</p>
+      </div>
+    </div>
+    <div class="scope-q">
+      <div class="sq-num">Q6</div>
+      <div>
+        <div class="sq-title">Cut path — if you're running behind</div>
+        <p class="sq-eg">What do you drop first? Decide now, before pressure forces a bad call.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>The one rule about scope</h2>
+  <p>Your first working version should have exactly one complete user story. Not five. One. The one where if a stranger used it and it worked, you'd feel proud showing it. Everything else is v2.</p>
+  <p>Ship the core loop first. Add features after it works end-to-end. Every minute spent on a second feature before the first one works is borrowed time you'll pay back later, under pressure.</p>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to Setup guide →</button>
+</template>
+
+<!-- ── 03: Setup Guide ──────────────────────── -->
+<template id="tpl-3">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <h1>Setup guide</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p>This takes about 5 minutes. Do it before anything else. Every minute you spend on setup now is a minute you don't lose in the middle of a build.</p>
+
+  <h2>Step 1 — Install OpenCode</h2>
+  <div class="cb">
+    <div class="cb-head"><span class="cb-lang">bash</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="cb-body"><pre><span class="cc"># Quickest install (recommended)</span>
+<span class="ck">curl</span> -fsSL https://opencode.ai/install | bash
+
+<span class="cc"># Or with npm</span>
+<span class="ck">npm</span> i -g opencode-ai@latest
+
+<span class="cc"># Or on macOS with Homebrew</span>
+<span class="ck">brew</span> install anomalyco/tap/opencode</pre></div>
+  </div>
+
+  <h2>Step 2 — Connect an LLM provider</h2>
+  <p>OpenCode works with any provider. Use <strong>OpenCode Zen</strong> for this session — it has a free tier and requires no credit card:</p>
+  <ul class="arrow-list">
+    <li>Run <code>opencode</code> in any directory</li>
+    <li>Type <code>/connect</code> and press Enter</li>
+    <li>Select <code>opencode</code> as your provider</li>
+    <li>Follow the link to <code>opencode.ai/auth</code></li>
+    <li>Sign in with GitHub or Google</li>
+    <li>Copy your API key and paste it into the terminal</li>
+  </ul>
+  <p>Alternative providers: OpenAI, Anthropic, Google Gemini, Groq, Together AI, or any local model via Ollama.</p>
+
+  <h2>Step 3 — Initialise your project</h2>
+  <div class="cb">
+    <div class="cb-head"><span class="cb-lang">bash</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="cb-body"><pre><span class="ck">cd</span> <span class="cp">your-project-directory</span>
+<span class="ck">opencode</span>
+<span class="ck">/init</span>
+
+<span class="cc"># That's it. You're ready to build.</span></pre></div>
+  </div>
+
+  <div class="callout info"><p>When you run <code>/init</code>, OpenCode creates an <code>AGENTS.md</code> file in your project root. This file is critical — it tells OpenCode your project's purpose, coding standards, file structure, and constraints. Think of it as the brief you'd give a new developer on day one.</p></div>
+
+  <h2>Plan mode vs Build mode</h2>
+  <div class="mode-grid">
+    <div class="mode-card">
+      <div class="mode-tag blue">Default</div>
+      <div class="mode-name">Build Mode</div>
+      <p class="mode-desc">Full read/write/exec access. The agent has full power to execute. Use this when you're ready to ship.</p>
+    </div>
+    <div class="mode-card">
+      <div class="mode-tag purple">Safe</div>
+      <div class="mode-name">Plan Mode</div>
+      <p class="mode-desc">Read-only, asks before running commands. Explore and debug without risk. Always plan first.</p>
+    </div>
+  </div>
+
+  <h2>Core commands</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Command</th><th>What it does</th><th>When to use</th></tr></thead>
+    <tbody>
+      <tr><td><code>opencode</code></td><td>Launch the TUI in the current directory</td><td>Start of every session</td></tr>
+      <tr><td><code>/init</code></td><td>Creates AGENTS.md for your project</td><td>First thing in any new project</td></tr>
+      <tr><td><code>/connect</code></td><td>Configure LLM provider</td><td>Before the first build</td></tr>
+      <tr><td>Tab key</td><td>Toggle between Build and Plan mode</td><td>Constantly — plan first, then build</td></tr>
+      <tr><td><code>/undo</code></td><td>Revert the last agent action</td><td>When a change breaks something</td></tr>
+      <tr><td><code>/redo</code></td><td>Re-apply a reverted action</td><td>If you changed your mind</td></tr>
+      <tr><td><code>/share</code></td><td>Generate a shareable link of your session</td><td>To collaborate or demo</td></tr>
+      <tr><td><code>@general</code></td><td>Invoke a subagent for complex searches</td><td>Multi-step research tasks</td></tr>
+      <tr><td><code>/help</code></td><td>Show all available commands</td><td>When you're stuck</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="stats-row">
+    <div class="stat-item"><span class="stat-num">140k+</span><span class="stat-lbl">GitHub Stars</span></div>
+    <div class="stat-item"><span class="stat-num">850+</span><span class="stat-lbl">Contributors</span></div>
+    <div class="stat-item"><span class="stat-num">6.5M</span><span class="stat-lbl">Monthly Active Devs</span></div>
+  </div>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to Building your agent →</button>
+</template>
+
+<!-- ── 04: Building Your Agent ─────────────── -->
+<template id="tpl-4">
+  <div class="sec-hd">
+    <span class="sec-num">05</span>
+    <h1>Building your agent</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p>OpenCode creates one file that controls everything: <code>AGENTS.md</code>. That is it. One file in your project root. You can read it, edit it, and understand it completely in under two minutes.</p>
+
+  <h2>What goes in AGENTS.md</h2>
+  <div class="agent-rows">
+    <div class="agent-row"><div class="ar-num">1.</div><div><div class="ar-name">Identity</div><p class="ar-desc">Who the agent is and what it does — one sentence maximum</p></div></div>
+    <div class="agent-row"><div class="ar-num">2.</div><div><div class="ar-name">Context</div><p class="ar-desc">Timezone, currency, project language, and anything project-specific the agent needs to know</p></div></div>
+    <div class="agent-row"><div class="ar-num">3.</div><div><div class="ar-name">Rules</div><p class="ar-desc">Hard constraints the agent must follow — written as commands, not suggestions</p></div></div>
+    <div class="agent-row"><div class="ar-num">4.</div><div><div class="ar-name">Output format</div><p class="ar-desc">The exact structure you want for every response — be specific or it improvises</p></div></div>
+    <div class="agent-row"><div class="ar-num">5.</div><div><div class="ar-name">Boundaries</div><p class="ar-desc">What the agent cannot do or respond to — this is what keeps it on task</p></div></div>
+  </div>
+
+  <h2>Bad vs good</h2>
+  <div class="compare-grid">
+    <div class="cmp-card cmp-bad">
+      <div class="cmp-label">Bad</div>
+      <p>"You are a helpful coding assistant."</p>
+      <p>This tells the agent nothing. It will be generic, wordy, and inconsistent across sessions.</p>
+    </div>
+    <div class="cmp-card cmp-good">
+      <div class="cmp-label">Good</div>
+      <p>"You are CommitCraft, a git commit message generator. Output ONLY conventional commit format. Never write explanations. Never ask follow-up questions."</p>
+    </div>
+  </div>
+
+  <h2>Three mistakes to avoid</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Mistake</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>No output format</td><td>Agent improvises structure on every response</td></tr>
+      <tr><td>Conflicting instructions</td><td>Agent behaves unpredictably under edge cases</td></tr>
+      <tr><td>Aspirations, not constraints</td><td>"Try to be helpful" is ignored. "Never write explanations" is followed.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>The refinement loop</h2>
+  <div class="loop">
+    <div class="loop-step"><div class="loop-dot">1</div><div class="loop-lbl">Write<br>AGENTS.md</div></div>
+    <div class="loop-step"><div class="loop-dot">2</div><div class="loop-lbl">Test with<br>5 messages</div></div>
+    <div class="loop-step"><div class="loop-dot">3</div><div class="loop-lbl">Find<br>issues</div></div>
+    <div class="loop-step"><div class="loop-dot">4</div><div class="loop-lbl">Edit to<br>fix</div></div>
+    <div class="loop-step"><div class="loop-dot">5</div><div class="loop-lbl">Repeat</div></div>
+  </div>
+
+  <h2>AGENTS.md template</h2>
+  <div class="cb">
+    <div class="cb-head"><span class="cb-lang">markdown</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="cb-body"><pre><span class="cc"># Project: [tool name]</span>
+
+<span class="ck">## Identity</span>
+You are [name], a [tool type] that [does one thing].
+
+<span class="ck">## Context</span>
+Timezone: [your timezone]
+Project language: [Python / JavaScript / other]
+
+<span class="ck">## Rules</span>
+- Never write code without a plan first
+- Never output explanations, only the requested format
+- If input is invalid, respond with: [your error message]
+
+<span class="ck">## Output format</span>
+[Exact template here]
+
+<span class="ck">## Boundaries</span>
+- Do not respond to [off-topic things]
+- Do not ask follow-up questions
+- Do not suggest improvements unless asked</pre></div>
+  </div>
+
+  <h2>What to edit when</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Symptom</th><th>What to fix</th></tr></thead>
+    <tbody>
+      <tr><td>Wrong tone</td><td>AGENTS.md → Identity and Communication style</td></tr>
+      <tr><td>Off-topic responses</td><td>AGENTS.md → Boundaries (be more specific)</td></tr>
+      <tr><td>Bad output format</td><td>AGENTS.md → Output format (add exact template)</td></tr>
+      <tr><td>Hallucinates facts</td><td>AGENTS.md → Rules: add "Never invent data"</td></tr>
+      <tr><td>Too wordy</td><td>AGENTS.md → Output format: add max length constraint</td></tr>
+      <tr><td>Ignores constraints</td><td>AGENTS.md → Rules: use imperative, not advisory</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>The shortcut</h2>
+  <p>OpenCode already understands your codebase via LSP. You don't need to explain your file structure or functions. AGENTS.md is only for behaviour — how the agent acts, not what the code does.</p>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to After the buildathon →</button>
+</template>
+
+<!-- ── 05: After the Buildathon ─────────────── -->
+<template id="tpl-5">
+  <div class="sec-hd">
+    <span class="sec-num">06</span>
+    <h1>After the buildathon</h1>
+    <div class="sec-bar"></div>
+  </div>
+
+  <p>Your work lives on. That build runs on your machine tonight, tomorrow, and next week. Here is what to do with it.</p>
+
+  <div class="after-grid">
+    <div class="after-card">
+      <div class="after-title">Push to GitHub</div>
+      <p class="after-desc">Ship it publicly. Add the feature you cut during the build. You know exactly what you dropped — go add it back.</p>
+    </div>
+    <div class="after-card">
+      <div class="after-title">Share your session</div>
+      <p class="after-desc">Run <code>/share</code> to get a shareable link. Show at least one other person what you built and exactly how you did it.</p>
+    </div>
+    <div class="after-card">
+      <div class="after-title">Refine AGENTS.md</div>
+      <p class="after-desc">Better instructions compound over time. Spend 30 minutes this week improving it — you'll see dramatically better outputs.</p>
+    </div>
+    <div class="after-card">
+      <div class="after-title">Try a local model</div>
+      <p class="after-desc">OpenCode works with Ollama. Pull Llama 3.2 or Phi-3 and run the same workflow entirely on your own hardware.</p>
+    </div>
+  </div>
+
+  <h2>Go deeper</h2>
+  <ul class="arrow-list">
+    <li><strong>OpenCode Docs</strong> — Full reference, API docs, and configuration guide at opencode.ai</li>
+    <li><strong>GitHub repo</strong> — 140k+ stars, 850+ contributors, open to pull requests</li>
+    <li><strong>Awesome OpenCode</strong> — Community-curated use cases, patterns, and builds</li>
+    <li><strong>OpenCode Discord</strong> — Get help, share builds, find collaborators working on similar things</li>
+  </ul>
+
+  <div class="callout tip"><p>Post on LinkedIn or X: <em>"I built [tool name] in 3 hours using @opencode, an open-source AI agent."</em> Tag @opencode and @growthx. They reshare every build they see.</p></div>
+
+  <button class="continue-btn" onclick="continueSection()">Done. Continue to Brag about it →</button>
+</template>
+
+<!-- ── 06: Brag About It ────────────────────── -->
+<template id="tpl-6">
+  <div class="sec-hd">
+    <span class="sec-num">07</span>
+    <h1>Brag about it</h1>
+    <div class="sec-bar teal"></div>
+  </div>
+
+  <p class="big-quote">You walked in, maybe never having used an AI coding agent in the terminal, and you built something <em>real.</em></p>
+  <p class="big-quote">You scoped it, prompted it, debugged it, and shipped it.</p>
+
+  <p>Today was the starting point. The art of agentic coding is now something you know. And it compounds — every codebase you touch from here, you'll look at it differently. You'll think: <em>"I could ask OpenCode to build that."</em></p>
+  <p>The only thing left to do is tell someone.</p>
+
+  <h2>Post template</h2>
+  <p>Copy, fill in your build details, post anywhere:</p>
+  <div class="cb">
+    <div class="cb-head"><span class="cb-lang">post</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="cb-body"><pre>I just built [describe your build] in 3 hours.
+
+Not a tutorial. An actual working thing.
+
+Used @opencode — an open-source AI coding agent that runs
+in the terminal, reads your codebase, and writes real code
+alongside you. Free to use.
+
+The hard part wasn't the code. It was scoping tight enough
+to actually ship within the time.
+
+Build: [link or screenshot]
+
+#OpenCode #GrowthX #BuildInPublic</pre></div>
+  </div>
+
+  <h2>What comes next</h2>
+  <ul class="arrow-list">
+    <li>Push the repo and add a README that explains what it does and how to run it</li>
+    <li>Add back the feature you cut — you already know where it goes</li>
+    <li>Show one other builder how you used OpenCode — teaching cements the skill</li>
+    <li>Pick your next project and scope it the same way: three layers, one cut path</li>
+  </ul>
+
+  <div class="callout tip">
+    <p style="font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--teal)">Keep building. Ship something.</p>
+  </div>
+
+  <button class="continue-btn teal-btn" onclick="restartJourney()">↺ Start again from the beginning</button>
+</template>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+const SECTIONS = [
+  { num: '01', title: 'Welcome',              badge: null  },
+  { num: '02', title: 'Idea library',         badge: null  },
+  { num: '03', title: 'Scope your build',     badge: null  },
+  { num: '04', title: 'Setup guide',          badge: null  },
+  { num: '05', title: 'Building your agent',  badge: null  },
+  { num: '06', title: 'After the buildathon', badge: null  },
+  { num: '07', title: 'Brag about it',        badge: 'new' },
+];
+
+let active   = 0;
+let unlocked = new Set([0]);
+
+// ── PERSISTENCE ────────────────────────────────────────────────
+function save() {
+  try {
+    localStorage.setItem('oc-hb-active',    String(active));
+    localStorage.setItem('oc-hb-unlocked',  JSON.stringify([...unlocked]));
+  } catch (_) {}
+}
+function load() {
+  try {
+    const a = localStorage.getItem('oc-hb-active');
+    const u = localStorage.getItem('oc-hb-unlocked');
+    if (a !== null) {
+      const n = parseInt(a, 10);
+      if (!isNaN(n) && n >= 0 && n < SECTIONS.length) active = n;
+    }
+    if (u !== null) {
+      const arr = JSON.parse(u);
+      if (Array.isArray(arr)) unlocked = new Set(arr.filter(x => Number.isInteger(x)));
+    }
+    unlocked.add(0); // first section always unlocked
+  } catch (_) {}
+}
+
+// ── RENDER NAV ─────────────────────────────────────────────────
+function renderNav() {
+  // items
+  document.getElementById('navItems').innerHTML = SECTIONS.map((s, i) => {
+    const isActive   = i === active;
+    const isUnlocked = unlocked.has(i);
+    const cls = [
+      'nav-btn',
+      isActive   ? 'active'  : '',
+      !isUnlocked ? 'locked' : '',
+    ].filter(Boolean).join(' ');
+    const icon = isUnlocked
+      ? `<span class="nav-btn-icon">${s.num}</span>`
+      : `<span class="nav-btn-icon" style="font-size:10px;opacity:0.4">—</span>`;
+    const badge = s.badge
+      ? `<span class="nav-btn-badge">${s.badge}</span>`
+      : '';
+    return `<button class="${cls}" data-idx="${i}" onclick="navigateTo(${i})">${icon}<span class="nav-btn-text">${s.title}</span>${badge}</button>`;
+  }).join('');
+
+  // progress bars
+  document.getElementById('navProgress').innerHTML = SECTIONS.map((_, i) => {
+    const cls = i < active ? 'npb done' : i === active ? 'npb active' : 'npb';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+// ── RENDER TOP BAR ─────────────────────────────────────────────
+function renderTopBar() {
+  const pct = ((active + 1) / SECTIONS.length) * 100;
+  document.getElementById('topFill').style.width = pct + '%';
+}
+
+// ── RENDER CONTENT ─────────────────────────────────────────────
+function renderContent() {
+  const tpl     = document.getElementById('tpl-' + active);
+  const content = document.getElementById('content');
+  if (!tpl) return;
+  content.innerHTML = '';
+  content.appendChild(tpl.content.cloneNode(true));
+  // restart animation
+  content.style.animation = 'none';
+  void content.offsetHeight;
+  content.style.animation = '';
+  document.getElementById('mainArea').scrollTop = 0;
+}
+
+// ── NAVIGATE ───────────────────────────────────────────────────
+function navigateTo(idx) {
+  if (!unlocked.has(idx)) return;
+  active = idx;
+  save();
+  renderNav();
+  renderTopBar();
+  renderContent();
+  // close mobile nav if open
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+}
+
+// ── CONTINUE ───────────────────────────────────────────────────
+function continueSection() {
+  const next = active + 1;
+  if (next < SECTIONS.length) {
+    unlocked.add(next);
+    save();
+    navigateTo(next);
+  }
+}
+
+function restartJourney() {
+  active   = 0;
+  unlocked = new Set([0]);
+  save();
+  renderNav();
+  renderTopBar();
+  renderContent();
+}
+
+// ── IDEA CARDS ─────────────────────────────────────────────────
+function toggleIdea(idx) {
+  const card = document.getElementById('idea-' + idx);
+  if (!card) return;
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.idea-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+
+// ── CODE COPY ──────────────────────────────────────────────────
+function copyCode(btn) {
+  const pre  = btn.closest('.cb').querySelector('pre');
+  const text = pre.textContent;
+  const done = () => {
+    btn.textContent = 'copied';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('ok'); }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (_) {}
+  document.body.removeChild(ta);
+  cb();
+}
+
+// ── MOBILE NAV ─────────────────────────────────────────────────
+document.getElementById('mobileToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('navOverlay').classList.toggle('open');
+});
+document.getElementById('navOverlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+});
+
+// ── INIT ───────────────────────────────────────────────────────
+load();
+renderNav();
+renderTopBar();
+renderContent();
+</script>
+</body>
+</html>
