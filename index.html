@@ -321,6 +321,21 @@ code {
   border-radius: 4px;
 }
 
+a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-decoration-color: rgba(212,160,74,0.35);
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+a:hover {
+  color: #e8c06a;
+  text-decoration-color: rgba(232,192,106,0.7);
+}
+a code {
+  color: inherit;
+}
+
 /* ─────────────────────────────────────────
    CALLOUTS
 ───────────────────────────────────────── */
@@ -1169,7 +1184,7 @@ Plan only, no code yet."</pre></div>
     <li>Run <code>opencode</code> in any directory</li>
     <li>Type <code>/connect</code> and press Enter</li>
     <li>Select <code>opencode</code> as your provider</li>
-    <li>Follow the link to <code>opencode.ai/auth</code></li>
+    <li>Follow the link to <a href="http://opencode.ai/auth" target="_blank" rel="noopener noreferrer"><code>opencode.ai/auth</code></a></li>
     <li>Sign in with GitHub or Google</li>
     <li>Copy your API key and paste it into the terminal</li>
   </ul>
@@ -1353,10 +1368,10 @@ Project language: [Python / JavaScript / other]
 
   <h2>Go deeper</h2>
   <ul class="arrow-list">
-    <li><strong>OpenCode Docs</strong> , Full reference, API docs, and configuration guide at opencode.ai</li>
-    <li><strong>GitHub repo</strong> , 140k+ stars, 850+ contributors, open to pull requests</li>
-    <li><strong>Awesome OpenCode</strong> , Community-curated use cases, patterns, and builds</li>
-    <li><strong>OpenCode Discord</strong> , Get help, share builds, find collaborators working on similar things</li>
+    <li><a href="https://opencode.ai/docs" target="_blank" rel="noopener noreferrer"><strong>OpenCode Docs</strong></a> , Full reference, API docs, and configuration guide</li>
+    <li><a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener noreferrer"><strong>GitHub repo</strong></a> , 140k+ stars, 850+ contributors, open to pull requests</li>
+    <li><a href="https://github.com/awesome-opencode/awesome-opencode" target="_blank" rel="noopener noreferrer"><strong>Awesome OpenCode</strong></a> , Community-curated use cases, patterns, and builds</li>
+    <li><a href="https://discord.com/invite/opencode" target="_blank" rel="noopener noreferrer"><strong>OpenCode Discord</strong></a> , Get help, share builds, find collaborators working on similar things</li>
   </ul>
 
   <div class="callout tip"><p>Post on LinkedIn or X: <em>"I built [tool name] in 3 hours using @opencode, an open-source AI agent."</em> Tag @opencode and @growthx. They reshare every build they see.</p></div>
